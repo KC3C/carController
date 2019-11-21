@@ -86,6 +86,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // 处理图像放置到imageView的handler
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if(bitmap!=null && msg.what == 1) {
+                    if (bitmap.getWidth() > bitmap.getHeight())
+                        bitmap = bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+                    receivedImageView.setVisibility(View.VISIBLE);
+                    receivedImageView.setImageBitmap(bitmap);
+                }
+                super.handleMessage(msg);
+            }
+        };
+
+
         matrix.postRotate(90);
 
         Thread videoThread = new ReceiveVideo();
@@ -267,14 +283,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void run(){
             bitmap = BitmapFactory.decodeByteArray(data, 0, num);
-            if(bitmap!=null) {
-                if (bitmap.getWidth() > bitmap.getHeight())
-                    bitmap = bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-                receivedImageView.setVisibility(View.VISIBLE);
-
-                receivedImageView.setImageBitmap(bitmap);
-            }
+            Message msg=new Message();
+            msg.what = 1;
+            handler.sendMessage(msg);
         }
     }
 }
