@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        .setAction("Action", null).show();
             }
         });
-        
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -85,21 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //每次接受到图像以后在这里显示
-        handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                if(bitmap!=null && msg.arg1 == 123) {
-                    if (bitmap.getWidth() > bitmap.getHeight())
-                        bitmap = bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                    receivedImageView.setVisibility(View.VISIBLE);
-
-                    receivedImageView.setImageBitmap(bitmap);
-                }
-                super.handleMessage(msg);
-            }
-        };
 
         matrix.postRotate(90);
 
@@ -167,15 +152,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //连接发送端
     public class ConnectClientTask extends AsyncTask<Void, Void, Void> {
 
-        //private TextView textResponse;
         String dstAddress;
-        int dstPort = 8080;
-        //String response = "Connected";
+        int dstPort;
 
         ConnectClientTask(String addr, int port) {
             dstAddress = addr;
             dstPort = port;
-            //textResponse = tResponse;
         }
 
 
@@ -185,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Socket socket = null;
 
             try {
-                Log.d("aa", "aaaaa");
                 socket = new Socket(videoSenderIp, SENDER_PORT);
             } catch (UnknownHostException e) {
                 e.printStackTrace();
@@ -205,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         protected void onPostExecute(Void result) {
-//            Toast.makeText(MainActivity.this, "IP Connected!", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "请求已发送!", Toast.LENGTH_LONG).show();
             super.onPostExecute(result);
         }
     }
@@ -294,11 +275,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 receivedImageView.setImageBitmap(bitmap);
             }
-//            Message msg=new Message();
-//
-//            //还记得前面的信号处理函数显示图像吗，在这里实现的信号传递
-//            msg.arg1 = 123;
-//            handler.sendMessage(msg);
         }
     }
 }
