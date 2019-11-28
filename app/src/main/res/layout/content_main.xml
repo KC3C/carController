@@ -33,6 +33,15 @@
                 android:layout_gravity="center_horizontal"
                 android:singleLine="false"
                 android:hint="输入小车端手机IP地址" />
+
+            <EditText
+                android:id="@+id/bluetooth_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="输入蓝牙"
+                android:singleLine="false" />
+
         </FrameLayout>
     </RelativeLayout>
 

@@ -1,5 +1,8 @@
 package com.example.mac.carcontroller;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -30,6 +33,7 @@ import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Bitmap bitmap;
     private String videoSenderIp;
     private Matrix matrix = new Matrix();
+
+    private EditText blueToothEditText;
+    private String blueToothId;
+    private BluetoothAdapter mBluetoothAdapter;
+    public BluetoothSocket mBluetoothSocket;
+    private static UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     public static Handler handler;
 
@@ -56,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         videoSenderIpEditTest = findViewById(R.id.video_sender_ip_input);
         receivedImageView = findViewById(R.id.video_receiver);
         receivedImageView.setImageResource(R.drawable.ic_menu_camera);
+        blueToothEditText = findViewById(R.id.bluetooth_name);
 
         // 填写好IP后点右下角按钮开始连接发送端
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -106,6 +117,188 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Thread videoThread = new ReceiveVideo();
         videoThread.start();
+
+        //填好蓝牙名字并按下按钮连接蓝牙
+        FloatingActionButton bfab = (FloatingActionButton) findViewById(R.id.link_bluetooth);
+        bfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                blueToothId = blueToothEditText.getText().toString();
+                if(blueToothId.length()==0){
+                    Toast.makeText(MainActivity.this, "请先输入蓝牙名字", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                //连接小车蓝牙
+                mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if(mBluetoothAdapter == null){
+                    Toast.makeText(MainActivity.this,"BlueTooth can't be linked",Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                if(!mBluetoothAdapter.isEnabled()){
+                    mBluetoothAdapter.enable();
+                }
+                mBluetoothAdapter.startDiscovery();
+                Object[] btobjs = mBluetoothAdapter.getBondedDevices().toArray();
+                for(int i=0;i<btobjs.length;++i){
+                    BluetoothDevice bdevice = (BluetoothDevice)btobjs[i];
+                    if(bdevice.getName().equals(blueToothId)){
+                        try {
+                            mBluetoothSocket = bdevice.createInsecureRfcommSocketToServiceRecord(mUUID);
+                        }
+                        catch (IOException e){
+                        }
+                        break;
+                    }
+                }
+                if(mBluetoothSocket != null){
+                    try {
+                        mBluetoothSocket.connect();
+                        mBluetoothAdapter.cancelDiscovery();
+                    }
+                    catch (IOException e){
+                    }
+                    Toast.makeText(MainActivity.this,"bluetooth linked successfully",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this,"bluetooth not found",Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        );
+    }
+
+    //小车前进
+    public void Forward(){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            mBluetoothSocket.getOutputStream().write("A".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Forward(int time){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            char[] msg_arr = Integer.toString(time).toCharArray();
+            mBluetoothSocket.getOutputStream().write("Q".getBytes());
+            for(int i=0;i<msg_arr.length;i++)
+                mBluetoothSocket.getOutputStream().write(msg_arr[i]);
+            mBluetoothSocket.getOutputStream().write("O".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Back(){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            mBluetoothSocket.getOutputStream().write("B".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Back(int time){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            char[] msg_arr = Integer.toString(time).toCharArray();
+            mBluetoothSocket.getOutputStream().write("H".getBytes());
+            for(int i=0;i<msg_arr.length;i++)
+                mBluetoothSocket.getOutputStream().write(msg_arr[i]);
+            mBluetoothSocket.getOutputStream().write("O".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Left(){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            mBluetoothSocket.getOutputStream().write("L".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Left(int time){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            char[] msg_arr = Integer.toString(time).toCharArray();
+            mBluetoothSocket.getOutputStream().write("Z".getBytes());
+            for(int i=0;i<msg_arr.length;i++)
+                mBluetoothSocket.getOutputStream().write(msg_arr[i]);
+            mBluetoothSocket.getOutputStream().write("O".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Right(){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            mBluetoothSocket.getOutputStream().write("R".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Right(int time){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            char[] msg_arr = Integer.toString(time).toCharArray();
+            mBluetoothSocket.getOutputStream().write("Y".getBytes());
+            for(int i=0;i<msg_arr.length;i++)
+                mBluetoothSocket.getOutputStream().write(msg_arr[i]);
+            mBluetoothSocket.getOutputStream().write("O".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
+    }
+
+    public void Stop(){
+        if(mBluetoothSocket == null){
+            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            return;
+        }
+        try {
+            mBluetoothSocket.getOutputStream().write("P".getBytes());
+        }
+        catch (IOException e){
+            Log.e("Bluetooth",e.getMessage());
+        }
     }
 
     @Override
