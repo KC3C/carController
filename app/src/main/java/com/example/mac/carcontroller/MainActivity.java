@@ -12,6 +12,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -339,23 +342,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.nav_button) {
+            Toast.makeText(MainActivity.this, "Button Mode",Toast.LENGTH_SHORT).show();
+//            replaceFragment(new ButtonFragment());
+        } else if (id == R.id.nav_gesture){
+            Toast.makeText(MainActivity.this, "Gesture Mode",Toast.LENGTH_SHORT).show();
+//            replaceFragment(new GestureFragment());
+        }else if (id == R.id.nav_joystick){
+            Toast.makeText(MainActivity.this, "Joystick Mode",Toast.LENGTH_SHORT).show();
+//            replaceFragment(new JoyStickFragment());
+        }else if (id == R.id.nav_voice){
+            Toast.makeText(MainActivity.this, "Voice Mode",Toast.LENGTH_SHORT).show();
+//            replaceFragment(new VoiceFragment());
         }
-
+        else if (id == R.id.nav_gravity){
+            Toast.makeText(MainActivity.this, "Gravity Mode",Toast.LENGTH_SHORT).show();
+//            replaceFragment(new GravityFragment());
+        }
+        else if (id == R.id.nav_trace){
+            Toast.makeText(MainActivity.this, "Trace Mode",Toast.LENGTH_SHORT).show();
+//            replaceFragment(new TraceFragment());
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 
     //连接发送端
