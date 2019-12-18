@@ -31,6 +31,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mac.carcontroller.fragment.fragment_button;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -43,15 +45,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static final int RECEIVER_PORT = 8686; // 接收端端口号
     public static final int SENDER_PORT = 8080; // 发送端端口号
-    private EditText videoSenderIpEditTest;
-    private ImageView receivedImageView;
     private ServerSocket imageSocket;
     private Bitmap bitmap;
     private String videoSenderIp;
     private Matrix matrix = new Matrix();
 
+    private EditText videoSenderIpEditTest;
+    private ImageView receivedImageView;
     private EditText blueToothEditText;
     private String blueToothId;
+    private FloatingActionButton bfab;
+    private FloatingActionButton fab;
     private BluetoothAdapter mBluetoothAdapter;
     public BluetoothSocket mBluetoothSocket;
     private static UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -70,9 +74,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         receivedImageView = findViewById(R.id.video_receiver);
         receivedImageView.setImageResource(R.drawable.ic_menu_camera);
         blueToothEditText = findViewById(R.id.bluetooth_name);
+        bfab = (FloatingActionButton) findViewById(R.id.link_bluetooth);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         // 填写好IP后点右下角按钮开始连接发送端
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,11 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                    connectClientTask.execute();
                     Thread connectThread = new ConnectSender();
                     connectThread.start();
+                    fab.hide();
                 } else {
                     Toast.makeText(MainActivity.this, "请先输入发送端IP地址", Toast.LENGTH_SHORT).show();
                 }
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
 
@@ -122,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         videoThread.start();
 
         //填好蓝牙名字并按下按钮连接蓝牙
-        FloatingActionButton bfab = (FloatingActionButton) findViewById(R.id.link_bluetooth);
         bfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     catch (IOException e){
                     }
                     Toast.makeText(MainActivity.this,"bluetooth linked successfully",Toast.LENGTH_LONG).show();
+                    bfab.hide();
                 }
                 else{
                     Toast.makeText(MainActivity.this,"bluetooth not found",Toast.LENGTH_LONG).show();
@@ -344,7 +348,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_button) {
             Toast.makeText(MainActivity.this, "Button Mode",Toast.LENGTH_SHORT).show();
-//            replaceFragment(new ButtonFragment());
+            replaceFragment(new fragment_button());
+            hideText();
         } else if (id == R.id.nav_gesture){
             Toast.makeText(MainActivity.this, "Gesture Mode",Toast.LENGTH_SHORT).show();
 //            replaceFragment(new GestureFragment());
@@ -373,6 +378,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.commit();
+    }
+
+    private void hideText() {
+        videoSenderIpEditTest.setVisibility(View.GONE);
+        blueToothEditText.setVisibility(View.GONE);
     }
 
     //连接发送端

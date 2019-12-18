@@ -2,8 +2,8 @@
     <string name="app_name">carController</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">Group 14</string>
+    <string name="nav_header_subtitle">Linfeng Yu, Liangxu Nie, Jiayu Zhang, Jiacheng Shi</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 </resources>
