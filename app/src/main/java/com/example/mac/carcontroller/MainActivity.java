@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mac.carcontroller.fragment.ButtonFragment;
+import com.example.mac.carcontroller.fragment.GravityFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         receivedImageView = findViewById(R.id.video_receiver);
         receivedImageView.setImageResource(R.drawable.ic_menu_camera);
         blueToothEditText = findViewById(R.id.bluetooth_name);
+        blueToothEditText.setVisibility(View.GONE); // 隐藏蓝牙输入框
         bfab = (FloatingActionButton) findViewById(R.id.link_bluetooth);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -128,7 +130,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bfab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                blueToothId = blueToothEditText.getText().toString();
+//                blueToothId = blueToothEditText.getText().toString();
+                // 写死蓝牙名称
+                blueToothId = "HC-06";
                 if(blueToothId.length()==0){
                     Toast.makeText(MainActivity.this, "请先输入蓝牙名字", Toast.LENGTH_SHORT).show();
                     finish();
@@ -241,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
         try {
-            mBluetoothSocket.getOutputStream().write("L".getBytes());
+            mBluetoothSocket.getOutputStream().write("R".getBytes());
         }
         catch (IOException e){
             Log.e("Bluetooth",e.getMessage());
@@ -271,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
         try {
-            mBluetoothSocket.getOutputStream().write("R".getBytes());
+            mBluetoothSocket.getOutputStream().write("L".getBytes());
         }
         catch (IOException e){
             Log.e("Bluetooth",e.getMessage());
@@ -306,6 +310,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         catch (IOException e){
             Log.e("Bluetooth",e.getMessage());
         }
+    }
+
+    public boolean isBlueToothConnected(){
+        return mBluetoothSocket != null;
     }
 
     @Override
@@ -361,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_gravity){
             Toast.makeText(MainActivity.this, "Gravity Mode",Toast.LENGTH_SHORT).show();
-//            replaceFragment(new GravityFragment());
+            replaceFragment(new GravityFragment());
         }
         else if (id == R.id.nav_trace){
             Toast.makeText(MainActivity.this, "Trace Mode",Toast.LENGTH_SHORT).show();
