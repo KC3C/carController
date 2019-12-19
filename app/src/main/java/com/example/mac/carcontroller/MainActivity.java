@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Thread connectThread = new ConnectSender();
                     connectThread.start();
                     fab.hide();
+                    hideIpText();
                 } else {
                     Toast.makeText(MainActivity.this, "请先输入发送端IP地址", Toast.LENGTH_SHORT).show();
                 }
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     }
                     Toast.makeText(MainActivity.this,"bluetooth linked successfully",Toast.LENGTH_LONG).show();
                     bfab.hide();
+                    hideBlueTeethText();
                 }
                 else{
                     Toast.makeText(MainActivity.this,"bluetooth not found",Toast.LENGTH_LONG).show();
@@ -347,7 +349,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_button) {
             Toast.makeText(MainActivity.this, "Button Mode",Toast.LENGTH_SHORT).show();
             replaceFragment(new ButtonFragment());
-            hideText();
         } else if (id == R.id.nav_gesture){
             Toast.makeText(MainActivity.this, "Gesture Mode",Toast.LENGTH_SHORT).show();
 //            replaceFragment(new GestureFragment());
@@ -378,8 +379,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
     }
 
-    private void hideText() {
+    private void hideIpText() {
         videoSenderIpEditTest.setVisibility(View.GONE);
+    }
+
+    private void hideBlueTeethText() {
         blueToothEditText.setVisibility(View.GONE);
     }
 
