@@ -52,9 +52,7 @@ import com.example.mac.carcontroller.R;
 import com.example.mac.carcontroller.MainActivity;
 import com.example.mac.carcontroller.GestureFragment;
 
-/**
- * Created by mac on 2017/9/20.
- */
+
 public class TraceFragment extends Fragment {
 
     private MyView trailView;

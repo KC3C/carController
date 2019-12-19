@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new JoyStickFragment());
         }else if (id == R.id.nav_voice){
             Toast.makeText(MainActivity.this, "Voice Mode",Toast.LENGTH_SHORT).show();
-//            replaceFragment(new VoiceFragment());
+            replaceFragment(new VoiceFragment());
         }
         else if (id == R.id.nav_gravity){
             Toast.makeText(MainActivity.this, "Gravity Mode",Toast.LENGTH_SHORT).show();
