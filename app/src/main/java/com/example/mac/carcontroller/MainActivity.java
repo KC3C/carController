@@ -29,9 +29,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.mac.carcontroller.fragment.ButtonFragment;
-import com.example.mac.carcontroller.fragment.GravityFragment;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -259,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         try {
             char[] msg_arr = Integer.toString(time).toCharArray();
-            mBluetoothSocket.getOutputStream().write("Z".getBytes());
+            mBluetoothSocket.getOutputStream().write("Y".getBytes());
             for(int i=0;i<msg_arr.length;i++)
                 mBluetoothSocket.getOutputStream().write(msg_arr[i]);
             mBluetoothSocket.getOutputStream().write("O".getBytes());
@@ -289,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         try {
             char[] msg_arr = Integer.toString(time).toCharArray();
-            mBluetoothSocket.getOutputStream().write("Y".getBytes());
+            mBluetoothSocket.getOutputStream().write("Z".getBytes());
             for(int i=0;i<msg_arr.length;i++)
                 mBluetoothSocket.getOutputStream().write(msg_arr[i]);
             mBluetoothSocket.getOutputStream().write("O".getBytes());
@@ -359,7 +356,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new ButtonFragment());
         } else if (id == R.id.nav_gesture){
             Toast.makeText(MainActivity.this, "Gesture Mode",Toast.LENGTH_SHORT).show();
-//            replaceFragment(new GestureFragment());
+            replaceFragment(new GestureFragment());
         }else if (id == R.id.nav_joystick){
             Toast.makeText(MainActivity.this, "Joystick Mode",Toast.LENGTH_SHORT).show();
 //            replaceFragment(new JoyStickFragment());

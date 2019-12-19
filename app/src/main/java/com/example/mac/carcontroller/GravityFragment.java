@@ -1,4 +1,4 @@
-package com.example.mac.carcontroller.fragment;
+package com.example.mac.carcontroller;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -12,9 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import com.example.mac.carcontroller.R;
-import com.example.mac.carcontroller.MainActivity;
 
 public class GravityFragment extends Fragment {
     private static final String TAG = GravityFragment.class.getCanonicalName();
@@ -53,6 +50,7 @@ public class GravityFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_gravity, container , false);
         mImageView = (ImageView) view.findViewById(R.id.imgArrowGravity);
         if(ViewonFlag){

@@ -1,4 +1,4 @@
-package com.example.mac.carcontroller.fragment;
+package com.example.mac.carcontroller;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
