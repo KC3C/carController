@@ -274,7 +274,6 @@ public class TraceFragment extends Fragment {
             mCanvas.drawText("X：" + mPosX, 0, 20, mTextPaint);
             mCanvas.drawText("Y:" + mPosY, 0, 40, mTextPaint);
             mCanvas.drawText("touch_count = " + touch_count, 0, 60, mTextPaint);
-            Toast.makeText(getContext(), "hahah", Toast.LENGTH_SHORT).show();
         }
 
         public void run() {

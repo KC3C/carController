@@ -359,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             replaceFragment(new GestureFragment());
         }else if (id == R.id.nav_joystick){
             Toast.makeText(MainActivity.this, "Joystick Mode",Toast.LENGTH_SHORT).show();
-//            replaceFragment(new JoyStickFragment());
+            replaceFragment(new JoyStickFragment());
         }else if (id == R.id.nav_voice){
             Toast.makeText(MainActivity.this, "Voice Mode",Toast.LENGTH_SHORT).show();
 //            replaceFragment(new VoiceFragment());
@@ -370,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_trace){
             Toast.makeText(MainActivity.this, "Trace Mode",Toast.LENGTH_SHORT).show();
-//            replaceFragment(new TraceFragment());
+            replaceFragment(new TraceFragment());
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
