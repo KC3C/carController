@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,10 +27,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mac.carcontroller.fragment.fragment_button;
+import com.example.mac.carcontroller.fragment.ButtonFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -348,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_button) {
             Toast.makeText(MainActivity.this, "Button Mode",Toast.LENGTH_SHORT).show();
-            replaceFragment(new fragment_button());
+            replaceFragment(new ButtonFragment());
             hideText();
         } else if (id == R.id.nav_gesture){
             Toast.makeText(MainActivity.this, "Gesture Mode",Toast.LENGTH_SHORT).show();
