@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url  "http://dl.bintray.com/fotoapparat/fotoapparat" }
+    maven { url 'https://jitpack.io' }
+}
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -36,4 +41,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation files('libs/Msc.jar')
+
+    implementation 'io.fotoapparat:facedetector:1.0.0'
+    implementation 'io.fotoapparat.fotoapparat:library:1.2.0'
 }

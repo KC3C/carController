@@ -3,6 +3,7 @@ package com.example.mac.carcontroller;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton bfab;
     private FloatingActionButton fab;
     private BluetoothAdapter mBluetoothAdapter;
-    public BluetoothSocket mBluetoothSocket;
+    public static BluetoothSocket mBluetoothSocket;
     private static UUID mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     public static Handler handler;
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     receivedImageView.setVisibility(View.VISIBLE);
                     receivedImageView.setImageBitmap(bitmap);
+                } else if (msg.what == 2) {
+                    Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
                 }
                 super.handleMessage(msg);
             }
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
 //                blueToothId = blueToothEditText.getText().toString();
                 // 写死蓝牙名称
-                blueToothId = "HC-06";
+                blueToothId = "高颜值人士";
                 if(blueToothId.length()==0){
                     Toast.makeText(MainActivity.this, "请先输入蓝牙名字", Toast.LENGTH_SHORT).show();
                     finish();
@@ -296,9 +299,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void Stop(){
+    public static void Stop(){
         if(mBluetoothSocket == null){
-            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            Message msg = Message.obtain();
+            msg.what = 2;
+            handler.sendMessage(msg);
             return;
         }
         try {
@@ -371,6 +376,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id == R.id.nav_trace){
             Toast.makeText(MainActivity.this, "Trace Mode",Toast.LENGTH_SHORT).show();
             replaceFragment(new TraceFragment());
+        }
+        else if (id == R.id.nav_face) {
+            Toast.makeText(MainActivity.this, "Face Mode", Toast.LENGTH_SHORT).show();
+//            replaceFragment(new FaceFragment());
+            Intent intent=new Intent(MainActivity.this, FaceActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

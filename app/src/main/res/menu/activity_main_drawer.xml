@@ -29,5 +29,9 @@
             android:id="@+id/nav_trace"
             android:icon="@drawable/ic_menu_trace"
             android:title="Trace" />
+        <item
+            android:id="@+id/nav_face"
+            android:icon="@drawable/ic_menu_trace"
+            android:title="Face" />
     </group>
 </menu>
