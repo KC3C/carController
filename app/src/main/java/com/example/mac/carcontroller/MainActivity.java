@@ -15,6 +15,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Bitmap bitmap;
     private String videoSenderIp;
     private Matrix matrix = new Matrix();
+    private boolean enable_video = false;
 
     private EditText videoSenderIpEditTest;
     private ImageView receivedImageView;
@@ -111,7 +113,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (bitmap.getWidth() > bitmap.getHeight())
                         bitmap = bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 
-                    receivedImageView.setVisibility(View.VISIBLE);
+                    if(enable_video)  {
+                        receivedImageView.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        receivedImageView.setVisibility(View.INVISIBLE);
+                    }
+
                     receivedImageView.setImageBitmap(bitmap);
                 } else if (msg.what == 2) {
                     Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
@@ -344,6 +352,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            enable_video = !enable_video;
+            if(enable_video){
+                item.setTitle("关闭视频");
+                Toast.makeText(MainActivity.this, "Enable Video", Toast.LENGTH_SHORT).show();
+            }else{
+                item.setTitle("开启视频");
+                Toast.makeText(MainActivity.this, "Disable Video", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 
