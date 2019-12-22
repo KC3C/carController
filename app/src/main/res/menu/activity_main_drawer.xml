@@ -7,31 +7,24 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_button"
-            android:icon="@drawable/ic_menu_button"
-            android:title="Button" />
+            android:title="按钮控制" />
         <item
             android:id="@+id/nav_gesture"
-            android:icon="@drawable/ic_menu_gesture"
-            android:title="Gesture" />
+            android:title="手势控制" />
         <item
             android:id="@+id/nav_gravity"
-            android:icon="@drawable/ic_menu_gravity"
-            android:title="Gravity" />
+            android:title="重力控制" />
         <item
             android:id="@+id/nav_joystick"
-            android:icon="@drawable/ic_menu_joystick"
-            android:title="Joystick" />
+            android:title="摇杆控制" />
         <item
             android:id="@+id/nav_voice"
-            android:icon="@drawable/ic_menu_voice"
-            android:title="Voice" />
+            android:title="语音控制" />
         <item
             android:id="@+id/nav_trace"
-            android:icon="@drawable/ic_menu_trace"
-            android:title="Trace" />
+            android:title="轨迹控制" />
         <item
             android:id="@+id/nav_face"
-            android:icon="@drawable/ic_menu_trace"
-            android:title="Face" />
+            android:title="人脸控制" />
     </group>
 </menu>
