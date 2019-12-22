@@ -44,4 +44,5 @@ dependencies {
 
     implementation 'io.fotoapparat:facedetector:1.0.0'
     implementation 'io.fotoapparat.fotoapparat:library:1.2.0'
+    implementation 'com.github.Almeros:android-gesture-detectors:v1.0.1'
 }

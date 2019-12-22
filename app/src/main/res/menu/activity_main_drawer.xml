@@ -26,5 +26,8 @@
         <item
             android:id="@+id/nav_face"
             android:title="人脸控制" />
+        <item
+            android:id="@+id/nav_touch"
+            android:title="触摸控制" />
     </group>
 </menu>

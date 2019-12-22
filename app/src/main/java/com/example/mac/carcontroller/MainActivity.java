@@ -187,12 +187,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //小车前进
-    public void Forward(){
+    public static void Forward(){
         if(mBluetoothSocket == null){
-            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            Message msg = Message.obtain();
+            msg.what = 2;
+            handler.sendMessage(msg);
             return;
         }
         try {
+            System.out.println("前进");
             mBluetoothSocket.getOutputStream().write("A".getBytes());
         }
         catch (IOException e){
@@ -217,12 +220,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void Back(){
+    public static void Back(){
         if(mBluetoothSocket == null){
-            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            Message msg = Message.obtain();
+            msg.what = 2;
+            handler.sendMessage(msg);
             return;
         }
         try {
+            System.out.println("后退");
             mBluetoothSocket.getOutputStream().write("B".getBytes());
         }
         catch (IOException e){
@@ -247,12 +253,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void Left(){
+    public static void Left(){
         if(mBluetoothSocket == null){
-            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            Message msg = Message.obtain();
+            msg.what = 2;
+            handler.sendMessage(msg);
             return;
         }
         try {
+            System.out.println("左转");
             mBluetoothSocket.getOutputStream().write("R".getBytes());
         }
         catch (IOException e){
@@ -277,12 +286,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    public void Right(){
+    public static void Right(){
         if(mBluetoothSocket == null){
-            Toast.makeText(MainActivity.this,"bluetooth not connected",Toast.LENGTH_LONG).show();
+            Message msg = Message.obtain();
+            msg.what = 2;
+            handler.sendMessage(msg);
             return;
         }
         try {
+            System.out.println("右转");
             mBluetoothSocket.getOutputStream().write("L".getBytes());
         }
         catch (IOException e){
@@ -315,6 +327,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
         try {
+            System.out.println("停止");
             mBluetoothSocket.getOutputStream().write("P".getBytes());
         }
         catch (IOException e){
@@ -395,10 +408,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (id == R.id.nav_face) {
             Toast.makeText(MainActivity.this, "Face Mode", Toast.LENGTH_SHORT).show();
-//            replaceFragment(new FaceFragment());
             Intent intent=new Intent(MainActivity.this, FaceActivity.class);
             startActivity(intent);
         }
+        else if (id == R.id.nav_touch) {
+            Toast.makeText(MainActivity.this, "Touch Mode", Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(MainActivity.this, TouchActivity.class);
+            startActivity(intent);
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
