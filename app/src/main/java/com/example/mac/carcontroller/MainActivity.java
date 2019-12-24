@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View v) {
 //                blueToothId = blueToothEditText.getText().toString();
                 // 写死蓝牙名称
-                blueToothId = "高颜值人士";
+                blueToothId = "HC-06";
                 if(blueToothId.length()==0){
                     Toast.makeText(MainActivity.this, "请先输入蓝牙名字", Toast.LENGTH_SHORT).show();
                     finish();
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     catch (IOException e){
                     }
                     Toast.makeText(MainActivity.this,"bluetooth linked successfully",Toast.LENGTH_LONG).show();
-                    bfab.hide();
+//                    bfab.hide();
                     hideBlueTeethText();
                 }
                 else{

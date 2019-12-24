@@ -38,6 +38,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
+import android.os.Handler;
 
 
 public class VoiceFragment extends Fragment {
@@ -46,6 +47,7 @@ public class VoiceFragment extends Fragment {
     private boolean hasPermission=false;
     private final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
     private RecognizerDialog mDialog;
+    private Handler handler = new Handler();
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -73,18 +75,42 @@ public class VoiceFragment extends Fragment {
                 if (result.contains("前")) {
                     Toast.makeText(getActivity(), "前进", Toast.LENGTH_SHORT).show();
                     ((MainActivity)getActivity()).Forward();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity)getActivity()).Stop();
+                        }
+                    }, 1500);
                 } else if (result.contains("后")) {
                     Toast.makeText(getActivity(), "后退", Toast.LENGTH_SHORT).show();
                     ((MainActivity)getActivity()).Back();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity)getActivity()).Stop();
+                        }
+                    }, 1500);
                 } else if (result.contains("停")) {
                     Toast.makeText(getActivity(), "停止", Toast.LENGTH_SHORT).show();
                     ((MainActivity)getActivity()).Stop();
                 } else if (result.contains("左")) {
                     Toast.makeText(getActivity(), "左转", Toast.LENGTH_SHORT).show();
                     ((MainActivity)getActivity()).Left();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity)getActivity()).Stop();
+                        }
+                    }, 1500);
                 } else if (result.contains("右")) {
                     Toast.makeText(getActivity(), "右转", Toast.LENGTH_SHORT).show();
                     ((MainActivity)getActivity()).Right();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((MainActivity)getActivity()).Stop();
+                        }
+                    }, 1500);
                 }
             }
 

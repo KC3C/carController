@@ -1,6 +1,7 @@
 package com.example.mac.carcontroller;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.jmedeisis.bugstick.JoystickListener;
 
 public class JoyStickFragment extends Fragment {
     private static final String TAG = JoyStickFragment.class.getCanonicalName();
+    private Handler handler = new Handler();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,24 +39,48 @@ public class JoyStickFragment extends Fragment {
                     case 1: {
                         if (getActivity() != null) {
                             ((MainActivity) getActivity()).Forward();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((MainActivity)getActivity()).Stop();
+                                }
+                            }, 2000);
                         }
                         break;
                     }
                     case 2: {
                         if (getActivity() != null) {
                             ((MainActivity) getActivity()).Left();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((MainActivity)getActivity()).Stop();
+                                }
+                            }, 2000);
                         }
                         break;
                     }
                     case 3: {
                         if (getActivity() != null) {
                             ((MainActivity) getActivity()).Back();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((MainActivity)getActivity()).Stop();
+                                }
+                            }, 2000);
                         }
                         break;
                     }
                     case 4: {
                         if (getActivity() != null) {
                             ((MainActivity) getActivity()).Right();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ((MainActivity)getActivity()).Stop();
+                                }
+                            }, 2000);
                         }
                         break;
                     }
